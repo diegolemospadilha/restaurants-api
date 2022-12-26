@@ -4,11 +4,11 @@ require('dotenv').config()
 module.exports = {
     client: 'pg',
     connection: {
-        host: process.env.APP_DB_HOST,
-        port: process.env.APP_DB_PORT,
-        database: process.env.APP_DB_NAME,
-        user: process.env.APP_DB_USER,
-        password: process.env.APP_DB_PASSWORD
+        host: process.env.APP_DB_HOST || 'localhost',
+        port: process.env.APP_DB_PORT || '5432',
+        database: process.env.APP_DB_NAME || 'restaurants-api',
+        user: process.env.APP_DB_USER || 'postgres',
+        password: process.env.APP_DB_PASSWORD || 'postgres'
     },
     pool: {
         min: 2,
