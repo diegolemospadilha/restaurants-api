@@ -19,7 +19,9 @@ export class RestaurantRepository implements RestaurantOut {
     async getById(id: string): Promise<void> {
         try {
             return await db('restaurants')
-                .select('*').where({ id }).first();
+                .select('*')
+                .where({ 'restaurants.id': id })
+                .leftJoin('opening_days', 'restaurants.id', 'opening_days.restaurant_id')
         } catch (error) {
             console.log('error', error);
             throw new Error('Error');

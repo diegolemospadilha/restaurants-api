@@ -3,6 +3,7 @@ import { CreateRestaurantUseCase } from '../../domain/use-cases/CreateRestaurant
 import { DeleteRestaurantUseCase } from '../../domain/use-cases/DeleteRestaurantUseCase';
 import { GetByIdRestaurantsUseCase } from '../../domain/use-cases/GetByIdRestaurantsUseCase';
 import { GetRestaurantsUseCase } from '../../domain/use-cases/GetRestaurantsUseCase';
+import { IsOpenRestaurantUseCase } from '../../domain/use-cases/IsOpenRestaurantUseCase';
 import { UpdateRestaurantUseCase } from '../../domain/use-cases/UpdateRestaurantUseCase';
 
 export class RestaurantController {
@@ -13,6 +14,7 @@ export class RestaurantController {
         readonly createRestaurantsUseCase: CreateRestaurantUseCase,
         readonly deleteRestaurantUseCase: DeleteRestaurantUseCase,
         readonly updateRestaurantUseCase: UpdateRestaurantUseCase,
+        readonly isOpenRestaurantUseCase: IsOpenRestaurantUseCase,
     ){}
 
     public async get(
@@ -82,6 +84,22 @@ export class RestaurantController {
         ){
     
     const response = await this.updateRestaurantUseCase.execute(request.params.id, request.body);
+
+    reply.status(200).send(response);
+    }
+
+
+    public async isOpen(
+        request: FastifyRequest<{
+            Params: { id: string }
+            Querystring: { datetime: Date }
+        }>,
+        reply: FastifyReply
+        ){
+    
+    const response = await this.isOpenRestaurantUseCase.execute(
+        request.params.id,
+        request.query.datetime);
 
     reply.status(200).send(response);
     }

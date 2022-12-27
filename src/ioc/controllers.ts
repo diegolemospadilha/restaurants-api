@@ -2,6 +2,7 @@ import { CreateRestaurantUseCase } from "../domain/use-cases/CreateRestaurantUse
 import { DeleteRestaurantUseCase } from "../domain/use-cases/DeleteRestaurantUseCase";
 import { GetByIdRestaurantsUseCase } from "../domain/use-cases/GetByIdRestaurantsUseCase";
 import { GetRestaurantsUseCase } from "../domain/use-cases/GetRestaurantsUseCase";
+import { IsOpenRestaurantUseCase } from "../domain/use-cases/IsOpenRestaurantUseCase";
 import { UpdateRestaurantUseCase } from "../domain/use-cases/UpdateRestaurantUseCase";
 import { RestaurantController } from "../infrastructure/controller/RestaurantController";
 import { RestaurantRepository } from "../infrastructure/repository/RestaurantRepository";
@@ -17,7 +18,7 @@ const useCases = {
         create: new CreateRestaurantUseCase(repositories.restaurants),
         delete: new DeleteRestaurantUseCase(repositories.restaurants),
         update: new UpdateRestaurantUseCase(repositories.restaurants),
-
+        isOpen: new IsOpenRestaurantUseCase(repositories.restaurants),
     }
 }
 const controllers = {
@@ -27,6 +28,7 @@ const controllers = {
         useCases.restaurants.create,
         useCases.restaurants.delete,
         useCases.restaurants.update,
+        useCases.restaurants.isOpen,
     ),
 }
 

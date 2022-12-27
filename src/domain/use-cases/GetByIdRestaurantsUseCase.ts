@@ -14,8 +14,19 @@ export class GetByIdRestaurantsUseCase {
             throw new RestaurantNotFound(id);
         }
        
-        const { id:restaurantId, name, description } = data;
-        const output = { id: restaurantId, name, description };
+        const { id:restaurantId, name, description } = data[0];
+
+        
+        const openingHours = data.map((openingHour: any) => {
+            return {
+                dayOfWeek: openingHour.day,
+                isOpen: openingHour.is_open,
+                opensAt: openingHour.opens_at ?? undefined,
+                closesAt: openingHour.closes_at ?? undefined
+            }
+        })
+
+        const output = { id: restaurantId, name, description, openingHours };
         
         return output;
     }

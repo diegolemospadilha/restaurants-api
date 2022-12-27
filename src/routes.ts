@@ -10,6 +10,7 @@ export async function restaurantsRouter(app: FastifyInstance){
     app.post('/restaurants', controller.create.bind(controller));
     app.delete('/restaurants/:id', controller.delete.bind(controller));
     app.put('/restaurants/:id', controller.update.bind(controller));
+    app.get('/restaurants/:id/isOpen', controller.isOpen.bind(controller));
 }
 
 const routes = async (app: FastifyInstance) => {
