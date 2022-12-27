@@ -1,4 +1,7 @@
+import { Knex } from "knex";
+import { v4 as uuidv4 } from 'uuid';
 import { db } from "../../database/database";
+import { OpeningHoursDetail } from "../../domain/OpeningHours";
 import { RestaurantOut } from "../../domain/ports/outbound/RestaurantOut";
 import { Restaurant } from "../../domain/Restaurant";
 
@@ -23,15 +26,26 @@ export class RestaurantRepository implements RestaurantOut {
         }
     }
     async create(restaurant: Restaurant): Promise<any> {
+        const tx = await db.transaction();
         try {
-            const { id, name, description } = restaurant;
-            const data: any =  await db('restaurants')
-                .insert({id, name, description})
+            const { name, description, openingHours } = restaurant;
+            const [ restaurantId ]: any = await db('restaurants')
+                .transacting(tx)
+                .returning('id')
+                .insert({ id: restaurant.id, name, description })
 
-            return this.getById(id);
+            if(openingHours){
+                await this.createOpeningHours(
+                    restaurantId.id, tx, openingHours
+                );
+            }
+            
+
+            return await tx.commit();
 
         } catch (error) {
             console.log('error', error);
+            await tx.rollback(error);
             throw new Error('Error');
         }
     }
@@ -40,7 +54,7 @@ export class RestaurantRepository implements RestaurantOut {
         const { id, name, description } = restaurant;
         try {
             await db('restaurants')
-                .update({ name, description}).where({ id })
+                .update({ name, description }).where({ id })
 
             return this.getById(id);
 
@@ -59,9 +73,31 @@ export class RestaurantRepository implements RestaurantOut {
             throw new Error('Error');
         }
     }
-    
+
     isOpen(): Promise<void> {
         throw new Error("Method not implemented.");
+    }
+
+    private createOpeningHours(
+        restaurantId: string,
+        tx: Knex.Transaction,
+        openingHours: OpeningHoursDetail[],
+    ) {
+        return Promise.all(openingHours.map(
+            async openingHour => {
+                const { isOpen, opensAt, closesAt } = openingHour;
+
+                await db('opening_days').transacting(tx)
+                    .insert({
+                        id: openingHour.id, 
+                        day: openingHour.day, 
+                        is_open: isOpen,
+                        opens_at: opensAt,
+                        closes_at: closesAt,  
+                        restaurant_id: restaurantId
+                    })
+            }
+        ))
     }
 
 }

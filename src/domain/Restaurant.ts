@@ -1,4 +1,4 @@
-import { OpeningHoursDetail } from "./OpeningHoursDetail";
+import { OpeningHoursDetail } from "./OpeningHours";
 
 export class Restaurant {
     constructor(

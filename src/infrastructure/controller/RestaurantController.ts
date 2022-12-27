@@ -42,6 +42,12 @@ export class RestaurantController {
             Body: { 
                 name: string,
                 description: string
+                openingHours: Array<{
+                    dayOfWeek: number,
+                    isOpen: boolean
+                    opensAt: string,
+                    closesAt: string,
+                }>
             }
         }>,
         reply: FastifyReply

@@ -8,6 +8,8 @@ export async function up(knex: Knex): Promise<void> {
         t.uuid('id').notNullable().unique();
         t.string('name').notNullable();
         t.string('description').notNullable();
+
+        t.index('id', 'idx_restaurants_id');
     })
 }
 

@@ -1,5 +1,6 @@
 import { RestaurantInput } from "../dto/RestaurantInput";
 import { RestaurantOutput } from "../dto/RestaurantOutput";
+import { RestaurantNotFound } from "../errors/RestaurantNotFound";
 import { RestaurantOut } from "../ports/outbound/RestaurantOut";
 import { Restaurant } from "../Restaurant";
 
@@ -12,7 +13,7 @@ export class UpdateRestaurantUseCase {
         const restaurantToBeUpdated = await this.repository.getById(id);
 
         if(!restaurantToBeUpdated){
-
+            throw new RestaurantNotFound(id);
         }
 
         const restaurant = new Restaurant(

@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import { errorHandler } from './handler/ErrorHandler';
 import { controllers } from './ioc/controllers'
 
 const controller = controllers.restaurants;
@@ -13,7 +14,8 @@ export async function restaurantsRouter(app: FastifyInstance){
 
 const routes = async (app: FastifyInstance) => {
 
-    app.register(restaurantsRouter);
+    app.register(restaurantsRouter)
+    .setErrorHandler(errorHandler);
     
     return app;
 }
