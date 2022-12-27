@@ -4,11 +4,11 @@ require('dotenv').config()
 module.exports = {
     client: 'pg',
     connection: {
-        host: process.env.APP_DB_HOST || 'localhost',
+        host: process.env.APP_DB_HOST || 'babar.db.elephantsql.com',
         port: process.env.APP_DB_PORT || '5432',
-        database: process.env.APP_DB_NAME || 'restaurants-api',
-        user: process.env.APP_DB_USER || 'postgres',
-        password: process.env.APP_DB_PASSWORD || 'postgres'
+        database: process.env.APP_DB_NAME || 'nimmzopn',
+        user: process.env.APP_DB_USER || 'nimmzopn',
+        password: process.env.APP_DB_PASSWORD || 'dpcsdWWXV6_FxjUhoCDqBeqy2-h0esr7'
     },
     pool: {
         min: 2,

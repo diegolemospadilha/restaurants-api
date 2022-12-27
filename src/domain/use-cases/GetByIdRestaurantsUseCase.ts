@@ -10,7 +10,7 @@ export class GetByIdRestaurantsUseCase {
     async execute(id: string): Promise<RestaurantOutput> {
         const data = await this.repository.getById(id);
 
-        if(!data){
+        if(data.length === 0){
             throw new RestaurantNotFound(id);
         }
        

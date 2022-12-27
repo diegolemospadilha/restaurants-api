@@ -1,4 +1,4 @@
-import fp from 'fastify-plugin';
+require('dotenv').config()
 import { FastifyInstance } from 'fastify';
 import { errorHandler } from './handler/ErrorHandler';
 import { controllers } from './ioc/controllers'
@@ -36,6 +36,16 @@ export async function restaurantsRouter(app: FastifyInstance){
 }
 
 const routes = async (app: FastifyInstance) => {
+
+    // Registers CORS
+    app.register(require('fastify-cors'), { 
+        origin: [
+        `http://localhost:${process.env.PORT}`,
+        `http://127.0.0.1:${process.env.PORT}`, 
+        process.env.HEROKU_URL
+        ],
+        methods: ['GET', 'PUT', 'POST', 'DELETE']
+  })
 
     await app.register(require('fastify-swagger'), swaggerOptions);
 
