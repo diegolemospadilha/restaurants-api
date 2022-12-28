@@ -95,10 +95,13 @@ export const getRestaurantsDoc: FastifySchema = {
     response: {
       [200]: {
         description: 'Success Response',
-        type: 'object',
-        properties: { 
-          id: { type: 'string', example: '656bf549-935f-48ec-82d4-c9dd619bce00' },
-          ...restaurantBaseSchema}   
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            id: { type: 'string', example: '656bf549-935f-48ec-82d4-c9dd619bce00' },
+            ...restaurantBaseSchema}  
+          }
       },
       [500]: internalServerErrorBaseSchema
     },
