@@ -7,7 +7,6 @@ export const restaurantIdSchema = {
     id: {
       type: 'string',
       description: 'Restaurant id',
-      example: '656bf549-935f-48ec-82d4-c9dd619bce00'
     }
   }
 }
@@ -18,7 +17,6 @@ export const dateTimeSchema = {
     datetime: {
       type: 'string',
       description: 'Date to be searched',
-      example: '2022-12-26 15:45:04.043 -0300',
     }
   }
 }
