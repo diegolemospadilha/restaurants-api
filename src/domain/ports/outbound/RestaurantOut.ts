@@ -6,5 +6,4 @@ export interface RestaurantOut {
     create(input: Restaurant): Promise<Restaurant>;
     update(input: Restaurant): Promise<Restaurant>;
     delete(id: string): Promise<void>;
-    isOpen(): Promise<void>;
 }
