@@ -18,7 +18,7 @@ export class IsOpenRestaurantUseCase {
 
         const timeInSeconds = this.getTimeInSeconds(timeToBeCompared)
 
-        const isOpen = timeInSeconds > dayOpenAtInSeconds && timeInSeconds <= dayClosesAtInSeconds;
+        const isOpen = timeInSeconds >= dayOpenAtInSeconds && timeInSeconds <= dayClosesAtInSeconds;
         return isOpen;
     }
 
@@ -31,7 +31,7 @@ export class IsOpenRestaurantUseCase {
 
         const dayToBeSearched = new Date(datetime);
         const dayOfWeek = dayToBeSearched.getDay();
-        const time = dayToBeSearched.toLocaleTimeString()
+        const time = dayToBeSearched.toTimeString()
         const dayExists = data.filter((restaurantDay: any) => restaurantDay.day === dayOfWeek)
 
         if(!dayExists) return { isOpen: false}
