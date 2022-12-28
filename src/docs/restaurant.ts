@@ -29,12 +29,15 @@ export const restaurantBaseSchema = {
 export const restaurantFullBaseSchema = {
     ...restaurantBaseSchema,
     openingHours: {
-        type: 'object',
-        properties:{
+        type: 'array',
+        items: {
+          type: 'object',
+          properties:{
             dayOfWeek: {type: 'number', description: 'Day of week in number format [0-6]', example: '0'},
             isOpen: {type: 'boolean', description: 'Value related if restaurant is open in day', example: 'true'},
             opensAt: {type: 'string', description: 'Opening hours of the restaurant that day (0-24) format', example: '12:00:00'},
             closesAt: {type: 'string', description: 'Closing hours of the restaurant that day (0-24) format', example: '18:00:00'}
+        }
     }}
 }
 export const restaurantNotFoundBaseSchema = {

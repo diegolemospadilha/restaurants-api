@@ -30,10 +30,21 @@ export class CreateRestaurantUseCase {
             input.description,
             openingHours
         );
-        const ix = await this.repository.create(restaurant);
+       
+        await this.repository.create(restaurant);
         const data = await this.repository.getById(restaurantId);
-        const { id, name, description } = data;
-        const output = { id, name, description };
+
+        const openingHoursData = data.map((openingHour: any) => {
+            return {
+                dayOfWeek: openingHour.day,
+                isOpen: openingHour.is_open,
+                opensAt: openingHour.opens_at ?? undefined,
+                closesAt: openingHour.closes_at ?? undefined
+            }
+        })
+
+        const { name, description } = data[0];
+        const output = { id: restaurantId, name, description, openingHours: openingHoursData };
         
         return output;
     }
